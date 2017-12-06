@@ -1,9 +1,10 @@
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
 /**
  * @param {string} key - The key to generate substitution key.
  * @returns {string} - Generated key.
  */
 const generateSubstitutionKey = (key) => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
   let generatedKey = key.toLowerCase()
 
   for (let i = 0; i < alphabet.length; i++) {
@@ -22,4 +23,15 @@ const generateSubstitutionKey = (key) => {
   }
 
   return generatedKey
+}
+
+const convertCharToCrypt = (char, generatedKey) => {
+  // TODO: implement this function.
+}
+
+const encrypt = (message, key) => {
+  const generatedKey = generateSubstitutionKey(key)
+  const messageWrappedIntoArray = message.split('')
+
+  return messageWrappedIntoArray.map(char => () => convertCharToCrypt(char, generatedKey)).join('')
 }
