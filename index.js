@@ -25,13 +25,55 @@ const generateSubstitutionKey = (key) => {
   return generatedKey
 }
 
-const convertCharToCrypt = (char, generatedKey) => {
-  // TODO: implement this function.
+/**
+ * Looks in alphabet for given `char`, if finds such one, replaces it with appropriate one from the `generatedKey`.
+ * @param {string} char  - Char to convert with.
+ * @param {string} generatedKey - The generated key.
+ */
+const cryptChar = (char, generatedKey) => {
+  for (let i = 0; i <= alphabet.length; i++) {
+    if (char.charCodeAt(0) >= 97 && char.charCodeAt(0) <= 122) {
+      if (char === alphabet[i]) {
+        return generatedKey[i]
+      }
+    }
+    else {
+      return char
+    }
+  }
 }
 
-const encrypt = (message, key) => {
+/**
+ * Looks in `generatedKey` for given `char`, if finds such one, replaces it with appropriate one from the alphabet.
+ * @param {string} char  - Char to convert with.
+ * @param {string} generatedKey - The generated key.
+ */
+const decryptChar = (char, generatedKey) => {
+  for (let i = 0; i <= generatedKey.length; i++) {
+    if (char.charCodeAt(0) >= 97 && char.charCodeAt(0) <= 122) {
+      if (char === generatedKey[i]) {
+        return alphabet[i]
+      }
+    }
+    else {
+      return char
+    }
+  } 
+}
+
+/**
+ * Generates the substitution key by given `key`. Wraps message into array and maps through it
+ *  with given `transformer` function.
+ * @param {string} message - The message to transform.
+ * @param {string} key - The key for transforming the message.
+ * @param {Function} transformer - Transformer function.
+ */
+const transformMessage = (message, key, transformer) => {
   const generatedKey = generateSubstitutionKey(key)
-  const messageWrappedIntoArray = message.split('')
+  const messageWrappedIntoArray = message.toLowerCase().split('')
 
-  return messageWrappedIntoArray.map(char => () => convertCharToCrypt(char, generatedKey)).join('')
+  return messageWrappedIntoArray.map((char) => transformer(char, generatedKey)).join('')
 }
+
+const encrpytedMessage = transformMessage('e', 'zebras', cryptChar)
+const plainText = transformMessage(encrpytedMessage, 'zebras', decryptChar)
