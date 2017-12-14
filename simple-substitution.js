@@ -29,6 +29,7 @@ const generateSubstitutionKey = (key) => {
  * Looks in alphabet for given `char`, if finds such one, replaces it with appropriate one from the `generatedKey`.
  * @param {string} char  - Char to convert with.
  * @param {string} generatedKey - The generated key.
+ * @returns {string} Encrypted character.
  */
 const cryptChar = (char, generatedKey) => {
   for (let i = 0; i <= alphabet.length; i++) {
@@ -47,6 +48,7 @@ const cryptChar = (char, generatedKey) => {
  * Looks in `generatedKey` for given `char`, if finds such one, replaces it with appropriate one from the alphabet.
  * @param {string} char  - Char to convert with.
  * @param {string} generatedKey - The generated key.
+ * @returns {string} Decrypted character.
  */
 const decryptChar = (char, generatedKey) => {
   for (let i = 0; i <= generatedKey.length; i++) {
@@ -75,5 +77,8 @@ const transformMessage = (message, key, transformer) => {
   return messageWrappedIntoArray.map((char) => transformer(char, generatedKey)).join('')
 }
 
-const encrpytedMessage = transformMessage('e', 'zebras', cryptChar)
-const plainText = transformMessage(encrpytedMessage, 'zebras', decryptChar)
+module.exports = {
+  transformMessage,
+  cryptChar,
+  decryptChar
+}
